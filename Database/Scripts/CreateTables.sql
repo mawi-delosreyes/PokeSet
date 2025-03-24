@@ -54,7 +54,7 @@ CREATE TABLE PokemonPresetData (
 	battle_mechanic varchar(50),
 	type varchar(50),
 	ev_id int(11),
-	uses bool,
+	used bool,
 	PRIMARY KEY(preset_data_id)
 );
 
@@ -66,6 +66,6 @@ CREATE TABLE PokemonEV (
 	special_attack int(3),
 	special_defense int(3),
 	speed int(3),
-	uses bool,
+	used bool,
 	PRIMARY KEY(ev_id)
 );
