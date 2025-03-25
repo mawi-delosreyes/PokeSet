@@ -1,8 +1,10 @@
 package com.pokeset.controller;
 
 import com.pokeset.dto.Team;
+import com.pokeset.model.Response;
 import com.pokeset.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +23,12 @@ public class TeamController {
     public ResponseEntity postRegisterTeam(
             @RequestBody Team team
     ){
-        try {
-            teamService.postRegisterTeam(team);
-            return new ResponseEntity<>(HttpStatusCode.valueOf(200));
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatusCode.valueOf(400));
+        Response response = teamService.postRegisterTeam(team);
+
+        if (!response.getStatus().equals("success")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
         }
+        return ResponseEntity.ok(response);
     }
 
 }
