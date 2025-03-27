@@ -3,6 +3,9 @@ package com.pokeset.service.impl;
 import com.pokeset.dto.PokemonEv;
 import com.pokeset.dto.PokemonPreset;
 import com.pokeset.dto.PokemonPresetData;
+import com.pokeset.model.IndividualPresetModel;
+import com.pokeset.model.PresetList;
+import com.pokeset.model.PresetModel;
 import com.pokeset.model.Response;
 import com.pokeset.repository.PokemonEvRepository;
 import com.pokeset.repository.PokemonPresetDataRepository;
@@ -12,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PokemonPresetServiceImpl implements PokemonPresetService {
@@ -67,12 +67,6 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             return response;
         }
 
-        Map<String, String> preset_moves = new HashMap<>();
-        preset_moves.put("move1", preset_data.get().getMove1());
-        preset_moves.put("move2", preset_data.get().getMove2());
-        preset_moves.put("move3", preset_data.get().getMove3());
-        preset_moves.put("move4", preset_data.get().getMove4());
-
         Optional<PokemonEv> preset_ev = pokemonEvRepository.findByEvId(preset_data.get().getEvId());
         if(preset_ev.isEmpty()) {
             response = new Response<Map>(
@@ -82,29 +76,32 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             return response;
         }
 
-        Map<String, Object> preset_evs = new HashMap<>();
-        preset_evs.put("hp", preset_ev.get().getHp());
-        preset_evs.put("attack", preset_ev.get().getAttack());
-        preset_evs.put("defense", preset_ev.get().getDefense());
-        preset_evs.put("special_attack", preset_ev.get().getSpecialAttack());
-        preset_evs.put("special_defense", preset_ev.get().getSpecialDefense());
-        preset_evs.put("speed", preset_ev.get().getSpeed());
+        IndividualPresetModel individualPresetModel = new IndividualPresetModel();
 
-        Map<String, Object> pokemon_preset = new HashMap<>();
-        pokemon_preset.put("preset_id", preset.get().getPresetId());
-        pokemon_preset.put("preset_name", preset.get().getPresetName());
-        pokemon_preset.put("moves", preset_moves);
-        pokemon_preset.put("item", preset_data.get().getItem());
-        pokemon_preset.put("ability", preset_data.get().getAbility());
-        pokemon_preset.put("nature", preset_data.get().getNature());
-        pokemon_preset.put("battle_mechanic", preset_data.get().getBattleMechanic());
-        pokemon_preset.put("battle_mechanic_type", preset_data.get().getType());
-        pokemon_preset.put("ev", preset_evs);
+        individualPresetModel.setMove1(preset_data.get().getMove1());
+        individualPresetModel.setMove2(preset_data.get().getMove2());
+        individualPresetModel.setMove3(preset_data.get().getMove3());
+        individualPresetModel.setMove4(preset_data.get().getMove4());
+        individualPresetModel.setItem(preset_data.get().getItem());
+        individualPresetModel.setAbility(preset_data.get().getAbility());
+        individualPresetModel.setNature(preset_data.get().getNature());
+        individualPresetModel.setBattleMechanic(preset_data.get().getBattleMechanic());
+        individualPresetModel.setBattleMechanicType(preset_data.get().getType());
 
-        response = new Response<Map>(
+        individualPresetModel.setHp(preset_ev.get().getHp());
+        individualPresetModel.setAttack(preset_ev.get().getAttack());
+        individualPresetModel.setDefense(preset_ev.get().getDefense());
+        individualPresetModel.setSpecialAttack(preset_ev.get().getSpecialAttack());
+        individualPresetModel.setSpecialDefense(preset_ev.get().getSpecialDefense());
+        individualPresetModel.setSpeed(preset_ev.get().getSpeed());
+
+        individualPresetModel.setPresetId(preset.get().getPresetId());
+        individualPresetModel.setPresetName(preset.get().getPresetName());
+
+        response = new Response<IndividualPresetModel>(
                 "success",
                 "Pokemon Preset found",
-                pokemon_preset
+                individualPresetModel
         );
 
         return response;
@@ -122,23 +119,28 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             return response;
         }
 
-        HashMap<String, Object> preset_list = new HashMap<>();
-        preset_list.put("pokemon_id", pokemonId);
-        preset_list.put("user_id", userId);
+        ArrayList preset_list = new ArrayList<>();
+        PresetList presetList = new PresetList();
+        PresetModel presetModel;
+        presetList.setPokemonId(pokemonId);
+        presetList.setUserId(userId);
 
         for(PokemonPreset preset : all_preset_list.get()){
-            HashMap<String, Object> individual_preset_info = new HashMap<>();
-            individual_preset_info.put("preset_id", preset.getPresetId());
-            individual_preset_info.put("preset_name", preset.getPresetName());
-            individual_preset_info.put("team_id", preset.getTeamId());
+            presetModel = new PresetModel();
+            presetModel.setPresetId(preset.getPresetId());
+            presetModel.setPresetName(preset.getPresetName());
+            presetModel.setTeamId(preset.getTeamId());
 
-            preset_list.put("preset_"+preset.getPresetId(), individual_preset_info);
+            preset_list.add(presetModel);
         }
 
-        response = new Response<Map>(
+        presetList.setPresetList(preset_list);
+
+
+        response = new Response<PresetList>(
                 "success",
                 "Presets found",
-                preset_list
+                presetList
         );
 
         return response;
