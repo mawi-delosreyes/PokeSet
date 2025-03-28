@@ -16,6 +16,8 @@ public class Response<T> {
         this.message = message;
     }
 
+    public Response(){}
+
     public void setStatus(String status) {
         this.status = status;
     }

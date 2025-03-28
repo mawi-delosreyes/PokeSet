@@ -3,14 +3,13 @@ package com.pokeset.service.impl;
 import com.pokeset.dto.PokemonEv;
 import com.pokeset.dto.PokemonPreset;
 import com.pokeset.dto.PokemonPresetData;
-import com.pokeset.model.IndividualPresetModel;
-import com.pokeset.model.PresetListModel;
-import com.pokeset.model.PresetModel;
-import com.pokeset.model.Response;
+import com.pokeset.model.*;
 import com.pokeset.repository.PokemonEvRepository;
 import com.pokeset.repository.PokemonPresetDataRepository;
 import com.pokeset.repository.PokemonPresetRepository;
 import com.pokeset.service.PokemonPresetService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ import java.util.*;
 @Service
 public class PokemonPresetServiceImpl implements PokemonPresetService {
 
+    private static final Logger log = LoggerFactory.getLogger(PokemonPresetServiceImpl.class);
     @Autowired
     private PokemonPresetRepository pokemonPresetRepository;
 
@@ -28,20 +28,34 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
     @Autowired
     private PokemonEvRepository pokemonEvRepository;
 
-    public Response<Object> postRegisterPokemonPreset(PokemonPreset pokemonPreset){
-        Response response;
+    public Response<Object> postRegisterPokemonPreset(PokemonPresetRequestWrapper pokemonPresetRequestWrapper){
+        Response response = new Response();
+
+        PokemonPreset pokemonPreset = pokemonPresetRequestWrapper.getPokemonPreset();
+        PokemonPresetData pokemonPresetData = pokemonPresetRequestWrapper.getPokemonPresetData();
+        PokemonEv pokemonEv = pokemonPresetRequestWrapper.getPokemonEv();
+
+        if (pokemonPreset.getPresetId() != null){
+            response.setStatus("error");
+            response.setMessage("Preset is already saved");
+        }
+
         try{
             pokemonPresetRepository.save(pokemonPreset);
-            response = new Response<Map>(
-                    "success",
-                    "Pokemon Preset has been saved"
-            );
-        } catch (Exception e){
-            response = new Response<Map>(
-                    "error",
-                    e.toString()
-            );
+            pokemonEvRepository.save(pokemonEv);
+            pokemonPresetData.setPresetId(pokemonPreset.getPresetId());
+            pokemonPresetData.setPokemonId(pokemonPreset.getPokemonId());
+            pokemonPresetData.setEvId(pokemonEv.getEvId());
+            System.out.println(pokemonPresetData);
+            pokemonPresetDataRepository.save(pokemonPresetData);
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setMessage(e.toString());
         }
+
+        response.setStatus("success");
+        response.setMessage("Pokemon Preset has been saved");
+
         return response;
     }
 

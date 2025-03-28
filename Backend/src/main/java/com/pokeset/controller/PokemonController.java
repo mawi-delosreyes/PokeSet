@@ -1,6 +1,6 @@
 package com.pokeset.controller;
 
-import com.pokeset.dto.PokemonPreset;
+import com.pokeset.model.PokemonPresetRequestWrapper;
 import com.pokeset.model.Response;
 import com.pokeset.service.PokemonPresetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ public class PokemonController {
     @Autowired
     PokemonPresetService pokemonPresetService;
 
-    @PostMapping("register")
+    @PostMapping("/preset/register")
     public ResponseEntity postRegisterPokemonPreset(
-            @RequestBody PokemonPreset pokemon_preset
+            @RequestBody PokemonPresetRequestWrapper pokemonPresetRequestWrapper
     ){
-        Response response = pokemonPresetService.postRegisterPokemonPreset(pokemon_preset);
+        Response response = pokemonPresetService.postRegisterPokemonPreset(pokemonPresetRequestWrapper);
 
         if(!response.getStatus().equals("success")){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
