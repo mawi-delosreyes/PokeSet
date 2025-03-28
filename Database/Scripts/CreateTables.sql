@@ -7,7 +7,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Teams (
-	team_id int(11),
+	team_id int(11) NOT NULL AUTO_INCREMENT,
 	user_id int(11),
 	team_name varchar(50),
 	access bool,
@@ -15,7 +15,7 @@ CREATE TABLE Teams (
 );
 
 CREATE TABLE PokemonPreset (
-	preset_id int(11),
+	preset_id int(11) NOT NULL AUTO_INCREMENT,
 	preset_name varchar(50),
 	pokemon_id int(11),
 	user_id int(11),
@@ -25,7 +25,7 @@ CREATE TABLE PokemonPreset (
 );
 
 CREATE TABLE MatchDetails (
-	match_detail_id int(11),
+	match_detail_id int(11) NOT NULL AUTO_INCREMENT,
 	team_id int(11),
 	user_id int(11),
 	match_date date,
@@ -41,7 +41,7 @@ CREATE TABLE MatchDetails (
 );
 
 CREATE TABLE PokemonPresetData (
-	preset_data_id int(11),
+	preset_data_id int(11) NOT NULL AUTO_INCREMENT,
 	preset_id int(11),
 	pokemon_id int(11),
 	move_1 varchar(50),
@@ -59,7 +59,7 @@ CREATE TABLE PokemonPresetData (
 );
 
 CREATE TABLE PokemonEV (
-	ev_id int(11),
+	ev_id int(11) NOT NULL AUTO_INCREMENT,
 	hp int(3),
 	attack int(3),
 	defense int(3),
