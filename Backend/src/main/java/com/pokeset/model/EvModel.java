@@ -1,53 +1,12 @@
-package com.pokeset.dto;
+package com.pokeset.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Builder
-@Table(name = "PokemonEV")
-@Entity
-public class PokemonEv {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ev_id")
-    private Integer evId;
-
-    @Column(name = "hp")
+public class EvModel {
     private Integer hp;
-
-    @Column(name = "attack")
     private Integer attack;
-
-    @Column(name = "defense")
     private Integer defense;
-
-    @Column(name = "special_attack")
     private Integer specialAttack;
-
-    @Column(name = "special_defense")
     private Integer specialDefense;
-
-    @Column(name = "speed")
     private Integer speed;
-
-    @Column(name = "used")
-    private boolean used;
-
-    public Integer getEvId() {
-        return evId;
-    }
-
-    public void setEvId(Integer evId) {
-        this.evId = evId;
-    }
 
     public Integer getHp() {
         return hp;
@@ -95,13 +54,5 @@ public class PokemonEv {
 
     public void setSpeed(Integer speed) {
         this.speed = speed;
-    }
-
-    public boolean isUsed() {
-        return used;
-    }
-
-    public void setUsed(boolean used) {
-        this.used = used;
     }
 }

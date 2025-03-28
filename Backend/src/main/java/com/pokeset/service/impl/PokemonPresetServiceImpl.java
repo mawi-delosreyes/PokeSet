@@ -4,7 +4,7 @@ import com.pokeset.dto.PokemonEv;
 import com.pokeset.dto.PokemonPreset;
 import com.pokeset.dto.PokemonPresetData;
 import com.pokeset.model.IndividualPresetModel;
-import com.pokeset.model.PresetList;
+import com.pokeset.model.PresetListModel;
 import com.pokeset.model.PresetModel;
 import com.pokeset.model.Response;
 import com.pokeset.repository.PokemonEvRepository;
@@ -12,7 +12,6 @@ import com.pokeset.repository.PokemonPresetDataRepository;
 import com.pokeset.repository.PokemonPresetRepository;
 import com.pokeset.service.PokemonPresetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -120,10 +119,10 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
         }
 
         ArrayList preset_list = new ArrayList<>();
-        PresetList presetList = new PresetList();
+        PresetListModel presetListModel = new PresetListModel();
         PresetModel presetModel;
-        presetList.setPokemonId(pokemonId);
-        presetList.setUserId(userId);
+        presetListModel.setPokemonId(pokemonId);
+        presetListModel.setUserId(userId);
 
         for(PokemonPreset preset : all_preset_list.get()){
             presetModel = new PresetModel();
@@ -134,13 +133,13 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             preset_list.add(presetModel);
         }
 
-        presetList.setPresetList(preset_list);
+        presetListModel.setPresetList(preset_list);
 
 
-        response = new Response<PresetList>(
+        response = new Response<PresetListModel>(
                 "success",
                 "Presets found",
-                presetList
+                presetListModel
         );
 
         return response;

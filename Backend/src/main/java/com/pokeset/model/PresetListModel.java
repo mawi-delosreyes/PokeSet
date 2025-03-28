@@ -2,7 +2,7 @@ package com.pokeset.model;
 
 import java.util.ArrayList;
 
-public class PresetList {
+public class PresetListModel {
     private Integer pokemonId;
     private Integer userId;
     private ArrayList presetList;

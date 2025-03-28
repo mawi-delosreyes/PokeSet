@@ -1,23 +1,19 @@
 package com.pokeset.model;
 
-public class IndividualPresetModel extends PresetModel {
+public class IndividualPresetModel extends EvModel {
     private String move1;
     private String move2;
     private String move3;
     private String move4;
-
-    private Integer hp;
-    private Integer attack;
-    private Integer defense;
-    private Integer specialAttack;
-    private Integer specialDefense;
-    private Integer speed;
 
     private String item;
     private String ability;
     private String nature;
     private String battleMechanic;
     private String battleMechanicType;
+
+    private Integer presetId;
+    private String presetName;
 
 
     public String getMove1() {
@@ -50,54 +46,6 @@ public class IndividualPresetModel extends PresetModel {
 
     public void setMove4(String move4) {
         this.move4 = move4;
-    }
-
-    public Integer getHp() {
-        return hp;
-    }
-
-    public void setHp(Integer hp) {
-        this.hp = hp;
-    }
-
-    public Integer getAttack() {
-        return attack;
-    }
-
-    public void setAttack(Integer attack) {
-        this.attack = attack;
-    }
-
-    public Integer getDefense() {
-        return defense;
-    }
-
-    public void setDefense(Integer defense) {
-        this.defense = defense;
-    }
-
-    public Integer getSpecialAttack() {
-        return specialAttack;
-    }
-
-    public void setSpecialAttack(Integer specialAttack) {
-        this.specialAttack = specialAttack;
-    }
-
-    public Integer getSpecialDefense() {
-        return specialDefense;
-    }
-
-    public void setSpecialDefense(Integer specialDefense) {
-        this.specialDefense = specialDefense;
-    }
-
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
     }
 
     public String getItem() {
@@ -138,5 +86,21 @@ public class IndividualPresetModel extends PresetModel {
 
     public void setBattleMechanicType(String battleMechanicType) {
         this.battleMechanicType = battleMechanicType;
+    }
+
+    public Integer getPresetId() {
+        return presetId;
+    }
+
+    public void setPresetId(Integer presetId) {
+        this.presetId = presetId;
+    }
+
+    public String getPresetName() {
+        return presetName;
+    }
+
+    public void setPresetName(String presetName) {
+        this.presetName = presetName;
     }
 }

@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
         Response response = new Response<Map>(
                 "success",
-                "User registered",
+                "User found",
                 user_info
         );
 
