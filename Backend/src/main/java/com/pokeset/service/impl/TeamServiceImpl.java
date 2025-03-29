@@ -7,26 +7,21 @@ import com.pokeset.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 @Service
 public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamRepository teamRepository;
 
     public Response<Object> postRegisterTeam(Team team){
-        Response response;
+        Response response = new Response<>();
+
         try {
             teamRepository.save(team);
-            response = new Response<Map>(
-                    "success",
-                    "Team has been saved"
-            );
+            response.setStatus("success");
+            response.setMessage("Team has been saved");
         } catch (Exception e) {
-            response = new Response<Map>(
-                    "error",
-                    e.toString()
-            );
+            response.setStatus("error");
+            response.setStatus(e.toString());
         }
         return response;
     }

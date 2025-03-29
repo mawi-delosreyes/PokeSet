@@ -30,12 +30,12 @@ CREATE TABLE MatchDetails (
 	user_id int(11),
 	match_date date,
 	number_of_games int(5),
-	pokemon_preset_id_1 int(1),
-	pokemon_preset_id_2 int(1),
-	pokemon_preset_id_3 int(1),
-	pokemon_preset_id_4 int(1),
-	pokemon_preset_id_5 int(1),
-	pokemon_preset_id_6 int(1),
+	opponent_1 int(1),
+	opponent_2 int(1),
+	opponent_3 int(1),
+	opponent_4 int(1),
+	opponent_5 int(1),
+	opponent_6 int(1),
 	result varchar(5),
 	PRIMARY KEY(match_detail_id)
 );
