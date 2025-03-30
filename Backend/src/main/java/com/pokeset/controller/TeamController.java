@@ -30,4 +30,16 @@ public class TeamController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("edit")
+    public ResponseEntity postEditTeam(
+            @RequestBody Team team
+    ){
+        Response response = teamService.postEditTeam(team);
+
+        if (!response.getStatus().equals("success")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }

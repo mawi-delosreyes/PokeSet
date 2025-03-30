@@ -7,6 +7,8 @@ import com.pokeset.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 @Service
 public class TeamServiceImpl implements TeamService {
     @Autowired
@@ -19,6 +21,21 @@ public class TeamServiceImpl implements TeamService {
             teamRepository.save(team);
             response.setStatus("success");
             response.setMessage("Team has been saved");
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setStatus(e.toString());
+        }
+        return response;
+    }
+
+    @Override
+    public Response<Object> postEditTeam(Team team) {
+        Response response = new Response<>();
+
+        try {
+            teamRepository.save(team);
+            response.setStatus("success");
+            response.setMessage("Team has been updated");
         } catch (Exception e) {
             response.setStatus("error");
             response.setStatus(e.toString());
