@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -46,7 +47,6 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             pokemonPresetData.setPresetId(pokemonPreset.getPresetId());
             pokemonPresetData.setPokemonId(pokemonPreset.getPokemonId());
             pokemonPresetData.setEvId(pokemonEv.getEvId());
-            System.out.println(pokemonPresetData);
             pokemonPresetDataRepository.save(pokemonPresetData);
         } catch (Exception e) {
             response.setStatus("error");
@@ -55,6 +55,57 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
 
         response.setStatus("success");
         response.setMessage("Pokemon Preset has been saved");
+
+        return response;
+    }
+
+    public Response<Object> postEditPokemonPreset(PokemonPresetRequestWrapper pokemonPresetRequestWrapper){
+        Response response = new Response();
+
+        PokemonPreset pokemonPreset = pokemonPresetRequestWrapper.getPokemonPreset();
+        PokemonPresetData pokemonPresetData = pokemonPresetRequestWrapper.getPokemonPresetData();
+        PokemonEv pokemonEv = pokemonPresetRequestWrapper.getPokemonEv();
+
+
+        Optional<PokemonPreset> existingPreset = pokemonPresetRepository.findByPresetId(pokemonPreset.getPresetId());
+        if(existingPreset.isEmpty()){
+            response.setStatus("error");
+            response.setMessage("Preset is not found");
+            return response;
+        }
+
+        Optional<PokemonPresetData> existingPresetData = pokemonPresetDataRepository.findByPresetId(existingPreset.get().getPresetId());
+        if(existingPresetData.isEmpty()){
+            response.setStatus("error");
+            response.setMessage("Preset Data is not found");
+            return response;
+        }
+
+        Optional<PokemonEv> existingEv = pokemonEvRepository.findByEvId(existingPresetData.get().getEvId());
+        if(existingEv.isEmpty()){
+            response.setStatus("error");
+            response.setMessage("Preset EV is not found");
+            return response;
+        }
+
+        pokemonPreset.setPresetId(existingPreset.get().getPresetId());
+        pokemonPresetData.setPresetDataId(existingPresetData.get().getPresetDataId());
+        pokemonEv.setEvId(existingEv.get().getEvId());
+
+        try{
+            pokemonPresetRepository.save(pokemonPreset);
+            pokemonEvRepository.save(pokemonEv);
+            pokemonPresetData.setPresetId(pokemonPreset.getPresetId());
+            pokemonPresetData.setPokemonId(pokemonPreset.getPokemonId());
+            pokemonPresetData.setEvId(pokemonEv.getEvId());
+            pokemonPresetDataRepository.save(pokemonPresetData);
+        } catch (Exception e) {
+            response.setStatus("error");
+            response.setMessage(e.toString());
+        }
+
+        response.setStatus("success");
+        response.setMessage("Pokemon Preset has been updated");
 
         return response;
     }

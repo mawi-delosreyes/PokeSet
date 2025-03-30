@@ -27,6 +27,18 @@ public class PokemonController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/preset/edit")
+    public ResponseEntity postEditPokemonPreset(
+            @RequestBody PokemonPresetRequestWrapper pokemonPresetRequestWrapper
+    ){
+        Response response = pokemonPresetService.postEditPokemonPreset(pokemonPresetRequestWrapper);
+
+        if(!response.getStatus().equals("success")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
+        }
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/presetData")
     public ResponseEntity getPokemonPreset(
             @RequestParam(required = true) Integer presetId
