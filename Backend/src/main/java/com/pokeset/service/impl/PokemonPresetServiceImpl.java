@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -111,63 +110,65 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
     }
 
     public Response<Object> getPokemonPreset(Integer presetId){
-        Response response;
+        Response response = new Response();
 
         Optional<PokemonPreset> preset = pokemonPresetRepository.findByPresetId(presetId);
         if(preset.isEmpty()) {
-            response = new Response<Map>(
-                    "error",
-                    "No Pokemon Preset found"
-            );
+            response.setStatus("error");
+            response.setMessage("No Pokemon Preset found");
             return response;
         }
 
         Optional<PokemonPresetData> preset_data = pokemonPresetDataRepository.findByPresetDataId(preset.get().getPresetId());
         if(preset_data.isEmpty()) {
-            response = new Response<Map>(
-                    "error",
-                    "No Pokemon Preset found"
-            );
+            response.setStatus("error");
+            response.setMessage("No Pokemon Preset Data found");
             return response;
         }
 
         Optional<PokemonEv> preset_ev = pokemonEvRepository.findByEvId(preset_data.get().getEvId());
         if(preset_ev.isEmpty()) {
-            response = new Response<Map>(
-                    "error",
-                    "No Pokemon EV Data found"
-            );
+            response.setStatus("error");
+            response.setMessage("No Pokemon EV Data found");
             return response;
         }
 
+        PokemonPresetData pokemonPresetData = new PokemonPresetData();
+        PokemonEv pokemonEv = new PokemonEv();
         IndividualPresetModel individualPresetModel = new IndividualPresetModel();
 
-        individualPresetModel.setMove1(preset_data.get().getMove1());
-        individualPresetModel.setMove2(preset_data.get().getMove2());
-        individualPresetModel.setMove3(preset_data.get().getMove3());
-        individualPresetModel.setMove4(preset_data.get().getMove4());
-        individualPresetModel.setItem(preset_data.get().getItem());
-        individualPresetModel.setAbility(preset_data.get().getAbility());
-        individualPresetModel.setNature(preset_data.get().getNature());
-        individualPresetModel.setBattleMechanic(preset_data.get().getBattleMechanic());
-        individualPresetModel.setBattleMechanicType(preset_data.get().getType());
+        pokemonPresetData.setPresetDataId(preset_data.get().getPresetDataId());
+        pokemonPresetData.setPresetId(preset_data.get().getPresetId());
+        pokemonPresetData.setPokemonId(preset_data.get().getPokemonId());
+        pokemonPresetData.setMove1(preset_data.get().getMove1());
+        pokemonPresetData.setMove2(preset_data.get().getMove2());
+        pokemonPresetData.setMove3(preset_data.get().getMove3());
+        pokemonPresetData.setMove4(preset_data.get().getMove4());
+        pokemonPresetData.setItem(preset_data.get().getItem());
+        pokemonPresetData.setAbility(preset_data.get().getAbility());
+        pokemonPresetData.setNature(preset_data.get().getNature());
+        pokemonPresetData.setBattleMechanic(preset_data.get().getBattleMechanic());
+        pokemonPresetData.setType(preset_data.get().getType());
+        pokemonPresetData.setEvId(preset_data.get().getEvId());
+        pokemonPresetData.setUsed(preset_data.get().isUsed());
 
-        individualPresetModel.setHp(preset_ev.get().getHp());
-        individualPresetModel.setAttack(preset_ev.get().getAttack());
-        individualPresetModel.setDefense(preset_ev.get().getDefense());
-        individualPresetModel.setSpecialAttack(preset_ev.get().getSpecialAttack());
-        individualPresetModel.setSpecialDefense(preset_ev.get().getSpecialDefense());
-        individualPresetModel.setSpeed(preset_ev.get().getSpeed());
+        pokemonEv.setEvId(preset_ev.get().getEvId());
+        pokemonEv.setHp(preset_ev.get().getHp());
+        pokemonEv.setAttack(preset_ev.get().getAttack());
+        pokemonEv.setDefense(preset_ev.get().getDefense());
+        pokemonEv.setSpecialAttack(preset_ev.get().getSpecialAttack());
+        pokemonEv.setSpecialDefense(preset_ev.get().getSpecialDefense());
+        pokemonEv.setSpeed(preset_ev.get().getSpeed());
+        pokemonEv.setUsed(preset_ev.get().isUsed());
 
         individualPresetModel.setPresetId(preset.get().getPresetId());
         individualPresetModel.setPresetName(preset.get().getPresetName());
+        individualPresetModel.setPokemonPresetData(pokemonPresetData);
+        individualPresetModel.setPokemonEv(pokemonEv);
 
-        response = new Response<IndividualPresetModel>(
-                "success",
-                "Pokemon Preset found",
-                individualPresetModel
-        );
-
+        response.setStatus("success");
+        response.setMessage("Pokemon Preset found");
+        response.setData(individualPresetModel);
         return response;
     }
 
