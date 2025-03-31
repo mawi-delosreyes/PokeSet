@@ -37,16 +37,20 @@ public class UserServiceImpl implements UserService {
     }
 
     public Response<Object> getUser(String username, String email, String password) {
-        Optional<User> user_data = userRepository.findByUsernameAndPassword(username, password);
-        if(!username.isEmpty()) {
+        Response response = new Response();
+        Optional<User> user_data = Optional.empty();
+
+        if(username != null) {
+            user_data= userRepository.findByUsernameAndPassword(username, password);
+        }
+        else if (email != null) {
             user_data = userRepository.findByEmailAndPassword(email, password);
         }
 
+
         if(user_data.isEmpty()){
-            Response response = new Response<Map>(
-                    "error",
-                    "No User found"
-            );
+            response.setStatus("error");
+            response.setMessage("No User found");
             return response;
         }
 
@@ -54,11 +58,9 @@ public class UserServiceImpl implements UserService {
         user_info.put("user_id", user_data.get().getUserId().toString());
         user_info.put("username", user_data.get().getUsername());
 
-        Response response = new Response<Map>(
-                "success",
-                "User found",
-                user_info
-        );
+        response.setStatus("success");
+        response.setMessage("User found");
+        response.setData(user_info);
 
         return response;
     }
