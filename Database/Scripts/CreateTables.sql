@@ -69,3 +69,11 @@ CREATE TABLE PokemonEV (
 	used bool,
 	PRIMARY KEY(ev_id)
 );
+
+CREATE TABLE PokemonMoves (
+	move_id int(11) NOT NULL AUTO_INCREMENT,
+	move_name varchar(50),
+	type_1 varchar(20),
+	type_2 varchar(20),
+	PRIMARY KEY(move_id)
+);

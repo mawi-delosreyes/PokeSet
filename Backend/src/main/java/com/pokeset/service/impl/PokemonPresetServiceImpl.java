@@ -1,5 +1,6 @@
 package com.pokeset.service.impl;
 
+import com.pokeset.constants.ResponseConstants;
 import com.pokeset.dto.PokemonEv;
 import com.pokeset.dto.PokemonPreset;
 import com.pokeset.dto.PokemonPresetData;
@@ -8,6 +9,7 @@ import com.pokeset.repository.PokemonEvRepository;
 import com.pokeset.repository.PokemonPresetDataRepository;
 import com.pokeset.repository.PokemonPresetRepository;
 import com.pokeset.service.PokemonPresetService;
+import com.pokeset.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +31,12 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
     private PokemonEvRepository pokemonEvRepository;
 
     public Response<Object> postRegisterPokemonPreset(PokemonPresetRequestWrapper pokemonPresetRequestWrapper){
-        Response response = new Response();
-
         PokemonPreset pokemonPreset = pokemonPresetRequestWrapper.getPokemonPreset();
         PokemonPresetData pokemonPresetData = pokemonPresetRequestWrapper.getPokemonPresetData();
         PokemonEv pokemonEv = pokemonPresetRequestWrapper.getPokemonEv();
 
         if (pokemonPreset.getPresetId() != null){
-            response.setStatus("error");
-            response.setMessage("Preset is already saved");
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_EXISTING);
         }
 
         try{
@@ -48,19 +47,13 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             pokemonPresetData.setEvId(pokemonEv.getEvId());
             pokemonPresetDataRepository.save(pokemonPresetData);
         } catch (Exception e) {
-            response.setStatus("error");
-            response.setMessage(e.toString());
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, e.toString());
         }
 
-        response.setStatus("success");
-        response.setMessage("Pokemon Preset has been saved");
-
-        return response;
+        return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.PRESET_REGISTERED);
     }
 
     public Response<Object> postEditPokemonPreset(PokemonPresetRequestWrapper pokemonPresetRequestWrapper){
-        Response response = new Response();
-
         PokemonPreset pokemonPreset = pokemonPresetRequestWrapper.getPokemonPreset();
         PokemonPresetData pokemonPresetData = pokemonPresetRequestWrapper.getPokemonPresetData();
         PokemonEv pokemonEv = pokemonPresetRequestWrapper.getPokemonEv();
@@ -68,23 +61,17 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
 
         Optional<PokemonPreset> existingPreset = pokemonPresetRepository.findByPresetId(pokemonPreset.getPresetId());
         if(existingPreset.isEmpty()){
-            response.setStatus("error");
-            response.setMessage("Preset is not found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_NOT_FOUND);
         }
 
         Optional<PokemonPresetData> existingPresetData = pokemonPresetDataRepository.findByPresetId(existingPreset.get().getPresetId());
         if(existingPresetData.isEmpty()){
-            response.setStatus("error");
-            response.setMessage("Preset Data is not found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_DATA_NOT_FOUND);
         }
 
         Optional<PokemonEv> existingEv = pokemonEvRepository.findByEvId(existingPresetData.get().getEvId());
         if(existingEv.isEmpty()){
-            response.setStatus("error");
-            response.setMessage("Preset EV is not found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.EV_NOT_FOUND);
         }
 
         pokemonPreset.setPresetId(existingPreset.get().getPresetId());
@@ -99,38 +86,26 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
             pokemonPresetData.setEvId(pokemonEv.getEvId());
             pokemonPresetDataRepository.save(pokemonPresetData);
         } catch (Exception e) {
-            response.setStatus("error");
-            response.setMessage(e.toString());
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, e.toString());
         }
 
-        response.setStatus("success");
-        response.setMessage("Pokemon Preset has been updated");
-
-        return response;
+        return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.PRESET_UPDATED);
     }
 
     public Response<Object> getPokemonPreset(Integer presetId){
-        Response response = new Response();
-
         Optional<PokemonPreset> preset = pokemonPresetRepository.findByPresetId(presetId);
         if(preset.isEmpty()) {
-            response.setStatus("error");
-            response.setMessage("No Pokemon Preset found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_NOT_FOUND);
         }
 
         Optional<PokemonPresetData> preset_data = pokemonPresetDataRepository.findByPresetDataId(preset.get().getPresetId());
         if(preset_data.isEmpty()) {
-            response.setStatus("error");
-            response.setMessage("No Pokemon Preset Data found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_DATA_NOT_FOUND);
         }
 
         Optional<PokemonEv> preset_ev = pokemonEvRepository.findByEvId(preset_data.get().getEvId());
         if(preset_ev.isEmpty()) {
-            response.setStatus("error");
-            response.setMessage("No Pokemon EV Data found");
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.EV_NOT_FOUND);
         }
 
         PokemonPresetData pokemonPresetData = new PokemonPresetData();
@@ -166,22 +141,13 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
         individualPresetModel.setPokemonPresetData(pokemonPresetData);
         individualPresetModel.setPokemonEv(pokemonEv);
 
-        response.setStatus("success");
-        response.setMessage("Pokemon Preset found");
-        response.setData(individualPresetModel);
-        return response;
+        return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.PRESET_FOUND, individualPresetModel);
     }
 
     public Response<Object> getAllPokemonPreset(Integer userId, Integer pokemonId){
-        Response response;
-
         Optional<List<PokemonPreset>> all_preset_list = pokemonPresetRepository.findAllByUserIdAndPokemonId(userId, pokemonId);
         if(all_preset_list.isEmpty()){
-            response = new Response<Map>(
-                    "error",
-                    "No Presets found"
-            );
-            return response;
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.PRESET_NOT_FOUND);
         }
 
         ArrayList preset_list = new ArrayList<>();
@@ -200,14 +166,6 @@ public class PokemonPresetServiceImpl implements PokemonPresetService {
         }
 
         presetListModel.setPresetList(preset_list);
-
-
-        response = new Response<PresetListModel>(
-                "success",
-                "Presets found",
-                presetListModel
-        );
-
-        return response;
+        return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.PRESET_FOUND, presetListModel);
     }
 }

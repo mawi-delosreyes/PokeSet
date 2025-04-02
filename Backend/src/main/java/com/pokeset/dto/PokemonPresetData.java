@@ -27,16 +27,16 @@ public class PokemonPresetData {
     private Integer pokemonId;
 
     @Column(name = "move_1")
-    private String move1;
+    private Integer move1;
 
     @Column(name = "move_2")
-    private String move2;
+    private Integer move2;
 
     @Column(name = "move_3")
-    private String move3;
+    private Integer move3;
 
     @Column(name = "move_4")
-    private String move4;
+    private Integer move4;
 
     @Column(name = "item")
     private String item;
@@ -83,35 +83,35 @@ public class PokemonPresetData {
         return pokemonId;
     }
 
-    public String getMove1() {
+    public Integer getMove1() {
         return move1;
     }
 
-    public void setMove1(String move1) {
+    public void setMove1(Integer move1) {
         this.move1 = move1;
     }
 
-    public String getMove2() {
+    public Integer getMove2() {
         return move2;
     }
 
-    public void setMove2(String move2) {
+    public void setMove2(Integer move2) {
         this.move2 = move2;
     }
 
-    public String getMove3() {
+    public Integer getMove3() {
         return move3;
     }
 
-    public void setMove3(String move3) {
+    public void setMove3(Integer move3) {
         this.move3 = move3;
     }
 
-    public String getMove4() {
+    public Integer getMove4() {
         return move4;
     }
 
-    public void setMove4(String move4) {
+    public void setMove4(Integer move4) {
         this.move4 = move4;
     }
 

@@ -1,10 +1,12 @@
 package com.pokeset.service.impl;
 
+import com.pokeset.constants.ResponseConstants;
 import com.pokeset.dto.MatchDetails;
 import com.pokeset.model.MatchRequestWrapper;
 import com.pokeset.repository.MatchRepository;
 import com.pokeset.model.Response;
 import com.pokeset.service.MatchService;
+import com.pokeset.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,6 @@ public class MatchServiceImpl implements MatchService {
     MatchRepository matchRepository;
 
     public Response<Object> postRegisterMatch(MatchRequestWrapper matchRequestWrapper){
-        Response response = new Response();
         MatchDetails matchDetails = new MatchDetails();
 
         matchDetails.setMatchDate(matchRequestWrapper.getMatchDate());
@@ -32,12 +33,9 @@ public class MatchServiceImpl implements MatchService {
 
         try{
             matchRepository.save(matchDetails);
-            response.setStatus("success");
-            response.setMessage("Match has been saved");
         } catch(Exception e){
-            response.setStatus("error");
-            response.setMessage(e.toString());
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, e.toString());
         }
-        return response;
+        return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.MATCH_REGISTERED);
     }
 }
