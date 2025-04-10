@@ -1,7 +1,8 @@
 package com.pokeset.controller;
 
+import com.pokeset.model.BaseResponse;
+import com.pokeset.model.IndividualPresetResponse;
 import com.pokeset.model.PokemonPresetRequestWrapper;
-import com.pokeset.model.Response;
 import com.pokeset.service.PokemonPresetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class PokemonController {
     public ResponseEntity postRegisterPokemonPreset(
             @RequestBody PokemonPresetRequestWrapper pokemonPresetRequestWrapper
     ){
-        Response response = pokemonPresetService.postRegisterPokemonPreset(pokemonPresetRequestWrapper);
+        BaseResponse response = pokemonPresetService.postRegisterPokemonPreset(pokemonPresetRequestWrapper);
 
         if(!response.getStatus().equals("success")){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
@@ -31,7 +32,7 @@ public class PokemonController {
     public ResponseEntity postEditPokemonPreset(
             @RequestBody PokemonPresetRequestWrapper pokemonPresetRequestWrapper
     ){
-        Response response = pokemonPresetService.postEditPokemonPreset(pokemonPresetRequestWrapper);
+        BaseResponse response = pokemonPresetService.postEditPokemonPreset(pokemonPresetRequestWrapper);
 
         if(!response.getStatus().equals("success")){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);
@@ -43,20 +44,7 @@ public class PokemonController {
     public ResponseEntity getPokemonPreset(
             @RequestParam(required = true) Integer presetId
     ){
-        Response response = pokemonPresetService.getPokemonPreset(presetId);
-
-        if(!response.getStatus().equals("success")){
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
-        }
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/allPresets")
-    public ResponseEntity getAllPresets(
-            @RequestParam(required = true) Integer userId,
-            @RequestParam(required = true) Integer pokemonId
-    ){
-        Response response = pokemonPresetService.getAllPokemonPreset(userId, pokemonId);
+        IndividualPresetResponse response = pokemonPresetService.getPokemonPreset(presetId);
 
         if(!response.getStatus().equals("success")){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);

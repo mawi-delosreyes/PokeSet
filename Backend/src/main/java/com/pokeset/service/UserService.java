@@ -1,11 +1,10 @@
 package com.pokeset.service;
 
 import com.pokeset.dto.User;
-import com.pokeset.model.Response;
-
-import java.util.Map;
+import com.pokeset.model.BaseResponse;
+import com.pokeset.model.UserResponse;
 
 public interface UserService {
-    Response<Object> postRegisterUser(User user);
-    Response<Object> getUser(String username, String email, String password);
+    BaseResponse<Object> postRegisterUser(User user);
+    UserResponse<Object> getUser(String username, String email, String password);
 }

@@ -2,9 +2,9 @@ package com.pokeset.service.impl;
 
 import com.pokeset.constants.ResponseConstants;
 import com.pokeset.dto.MatchDetails;
+import com.pokeset.model.BaseResponse;
 import com.pokeset.model.MatchRequestWrapper;
 import com.pokeset.repository.MatchRepository;
-import com.pokeset.model.Response;
 import com.pokeset.service.MatchService;
 import com.pokeset.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class MatchServiceImpl implements MatchService {
     @Autowired
     MatchRepository matchRepository;
 
-    public Response<Object> postRegisterMatch(MatchRequestWrapper matchRequestWrapper){
+    public BaseResponse<Object> postRegisterMatch(MatchRequestWrapper matchRequestWrapper){
         MatchDetails matchDetails = new MatchDetails();
 
         matchDetails.setMatchDate(matchRequestWrapper.getMatchDate());

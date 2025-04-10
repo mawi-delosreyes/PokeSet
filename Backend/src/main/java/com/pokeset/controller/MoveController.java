@@ -1,8 +1,8 @@
 package com.pokeset.controller;
 
 import com.pokeset.constants.ResponseConstants;
+import com.pokeset.model.BaseResponse;
 import com.pokeset.model.PokemonMovesModel;
-import com.pokeset.model.Response;
 import com.pokeset.service.PokemonMoveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class MoveController {
     public ResponseEntity postRegisterMove(
             @RequestBody PokemonMovesModel pokemonMovesModel
     ){
-        Response response = pokemonMoveService.postRegisterPokemonMove(pokemonMovesModel);
+        BaseResponse response = pokemonMoveService.postRegisterPokemonMove(pokemonMovesModel);
 
         if(!response.getStatus().equals(ResponseConstants.SUCCESS)) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(response);

@@ -1,11 +1,11 @@
 package com.pokeset.service;
 
+import com.pokeset.model.IndividualPresetResponse;
 import com.pokeset.model.PokemonPresetRequestWrapper;
-import com.pokeset.model.Response;
+import com.pokeset.model.BaseResponse;
 
 public interface PokemonPresetService {
-    Response<Object> postRegisterPokemonPreset(PokemonPresetRequestWrapper PokemonPresetRequestWrapper);
-    Response<Object> postEditPokemonPreset(PokemonPresetRequestWrapper PokemonPresetRequestWrapper);
-    Response<Object> getPokemonPreset(Integer presetId);
-    Response<Object> getAllPokemonPreset(Integer userId, Integer pokemonId);
+    BaseResponse<Object> postRegisterPokemonPreset(PokemonPresetRequestWrapper PokemonPresetRequestWrapper);
+    BaseResponse<Object> postEditPokemonPreset(PokemonPresetRequestWrapper PokemonPresetRequestWrapper);
+    IndividualPresetResponse<Object> getPokemonPreset(Integer presetId);
 }

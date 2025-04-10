@@ -1,33 +1,20 @@
 package com.pokeset.model;
 
-public class PokemonCardModel {
-    private String teamName;
-    private Integer teamId;
+import com.pokeset.dto.PokemonEv;
+
+public class PokemonPresetModel {
     private Integer presetId;
+    private Integer pokemonId;
     private String pokemonName;
     private String pokemonType1;
     private String pokemonType2;
     private String nature;
     private String item;
+    private String ability;
     private String battleMechanic;
-    private String battleMechanicType;
-    private Integer teamArrange;
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public Integer getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(Integer teamId) {
-        this.teamId = teamId;
-    }
+    private String type;
+    private PokemonMovesModel pokemonMovesModel;
+    private PokemonEv pokemonEv;
 
     public Integer getPresetId() {
         return presetId;
@@ -35,6 +22,14 @@ public class PokemonCardModel {
 
     public void setPresetId(Integer presetId) {
         this.presetId = presetId;
+    }
+
+    public Integer getPokemonId() {
+        return pokemonId;
+    }
+
+    public void setPokemonId(Integer pokemonId) {
+        this.pokemonId = pokemonId;
     }
 
     public String getPokemonName() {
@@ -77,6 +72,14 @@ public class PokemonCardModel {
         this.item = item;
     }
 
+    public String getAbility() {
+        return ability;
+    }
+
+    public void setAbility(String ability) {
+        this.ability = ability;
+    }
+
     public String getBattleMechanic() {
         return battleMechanic;
     }
@@ -85,19 +88,27 @@ public class PokemonCardModel {
         this.battleMechanic = battleMechanic;
     }
 
-    public String getBattleMechanicType() {
-        return battleMechanicType;
+    public String getType() {
+        return type;
     }
 
-    public void setBattleMechanicType(String battleMechanicType) {
-        this.battleMechanicType = battleMechanicType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Integer getTeamArrange() {
-        return teamArrange;
+    public PokemonMovesModel getPokemonMovesModel() {
+        return pokemonMovesModel;
     }
 
-    public void setTeamArrange(Integer teamArrange) {
-        this.teamArrange = teamArrange;
+    public void setPokemonMovesModel(PokemonMovesModel pokemonMovesModel) {
+        this.pokemonMovesModel = pokemonMovesModel;
+    }
+
+    public PokemonEv getPokemonEv() {
+        return pokemonEv;
+    }
+
+    public void setPokemonEv(PokemonEv pokemonEv) {
+        this.pokemonEv = pokemonEv;
     }
 }

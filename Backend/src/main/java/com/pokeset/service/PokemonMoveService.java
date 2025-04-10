@@ -1,8 +1,8 @@
 package com.pokeset.service;
 
 import com.pokeset.model.PokemonMovesModel;
-import com.pokeset.model.Response;
+import com.pokeset.model.BaseResponse;
 
 public interface PokemonMoveService {
-    Response<Object> postRegisterPokemonMove(PokemonMovesModel pokemonMovesModel);
+    BaseResponse<Object> postRegisterPokemonMove(PokemonMovesModel pokemonMovesModel);
 }

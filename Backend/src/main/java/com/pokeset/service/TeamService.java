@@ -1,10 +1,11 @@
 package com.pokeset.service;
 
 import com.pokeset.dto.Team;
-import com.pokeset.model.Response;
+import com.pokeset.model.BaseResponse;
+import com.pokeset.model.TeamResponse;
 
 public interface TeamService {
-    Response<Object> postRegisterTeam(Team team);
-    Response<Object> postEditTeam(Team team);
-    Response<Object> getTeam(Team team);
+    BaseResponse<Object> postRegisterTeam(Team team);
+    BaseResponse<Object> postEditTeam(Team team);
+    TeamResponse<Object> getTeam(Integer teamId, Integer userId, Boolean Access);
 }

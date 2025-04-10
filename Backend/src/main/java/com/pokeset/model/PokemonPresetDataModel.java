@@ -1,20 +1,20 @@
 package com.pokeset.model;
 
 public class PokemonPresetDataModel {
-    private PokemonMoveModel pokemonMoveModel;
-
+    private PokemonMovesModel moves;
     private String item;
     private String nature;
     private String ability;
     private String battleMechanic;
     private String type;
+    private Boolean used;
 
-    public PokemonMoveModel getPokemonMovesModel() {
-        return pokemonMoveModel;
+    public PokemonMovesModel getMoves() {
+        return moves;
     }
 
-    public void setPokemonMovesModel(PokemonMoveModel pokemonMovesModel) {
-        this.pokemonMoveModel = pokemonMovesModel;
+    public void setMoves(PokemonMovesModel pokemonMovesModel) {
+        this.moves = pokemonMovesModel;
     }
 
     public String getItem() {
@@ -55,5 +55,13 @@ public class PokemonPresetDataModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Boolean getUsed() {
+        return used;
+    }
+
+    public void setUsed(Boolean used) {
+        this.used = used;
     }
 }

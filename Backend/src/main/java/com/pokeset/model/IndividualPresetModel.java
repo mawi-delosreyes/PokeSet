@@ -1,7 +1,6 @@
 package com.pokeset.model;
 
 import com.pokeset.dto.PokemonEv;
-import com.pokeset.dto.PokemonPreset;
 import com.pokeset.dto.PokemonPresetData;
 
 public class IndividualPresetModel {

@@ -2,7 +2,6 @@ package com.pokeset.model;
 
 import com.pokeset.dto.PokemonEv;
 import com.pokeset.dto.PokemonPreset;
-import com.pokeset.dto.PokemonPresetData;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class PokemonPresetRequestWrapper{
     private PokemonPreset pokemonPreset;
-    private PokemonPresetData pokemonPresetData;
+    private PokemonPresetDataModel pokemonPresetData;
     private PokemonEv pokemonEv;
 
     public PokemonPreset getPokemonPreset() {
@@ -21,11 +20,11 @@ public class PokemonPresetRequestWrapper{
         this.pokemonPreset = pokemonPreset;
     }
 
-    public PokemonPresetData getPokemonPresetData() {
+    public PokemonPresetDataModel getPokemonPresetData() {
         return pokemonPresetData;
     }
 
-    public void setPokemonPresetData(PokemonPresetData pokemonPresetData) {
+    public void setPokemonPresetData(PokemonPresetDataModel pokemonPresetData) {
         this.pokemonPresetData = pokemonPresetData;
     }
 

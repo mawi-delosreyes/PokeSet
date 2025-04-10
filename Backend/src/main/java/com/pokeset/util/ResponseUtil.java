@@ -1,43 +1,47 @@
 package com.pokeset.util;
 
-import com.pokeset.model.IndividualPresetModel;
-import com.pokeset.model.PresetListModel;
-import com.pokeset.model.Response;
+import com.pokeset.dto.MatchDetails;
+import com.pokeset.model.*;
 import lombok.experimental.UtilityClass;
-
-import java.util.HashMap;
 
 @UtilityClass
 public class ResponseUtil {
 
-    public Response generatedResponse(String status, String message) {
-        Response response = new Response();
+    public BaseResponse generatedResponse(String status, String message) {
+        BaseResponse response = new BaseResponse();
         response.setStatus(status);
         response.setMessage(message);
         return response;
     }
 
-    public Response generatedResponse(String status, String message, HashMap data) {
-        Response response = new Response();
+    public UserResponse generatedResponse(String status, String message, String username, Integer userId, String email) {
+        UserResponse response = new UserResponse();
         response.setStatus(status);
         response.setMessage(message);
-        response.setData(data);
+        response.setUsername(username);
+        response.setUserId(userId);
+        response.setEmail(email);
         return response;
     }
 
-    public Response generatedResponse(String status, String message, IndividualPresetModel individualPresetModel){
-        Response response = new Response();
+    public IndividualPresetResponse generatedResponse(String status, String message, IndividualPresetModel individualPresetModel){
+        IndividualPresetResponse response = new IndividualPresetResponse();
         response.setStatus(status);
         response.setMessage(message);
-        response.setData(individualPresetModel);
+        response.setIndividualPresetModel(individualPresetModel);
         return response;
     }
 
-    public Response generatedResponse(String status, String message, PresetListModel presetListModel) {
-        Response response = new Response();
+    public TeamResponse generatedResponse(String status, String message, String teamName, Integer teamId, Integer userId,
+                                      PokemonTeamPresetsModel pokemonTeamPresetsModel, MatchDetails matchDetails) {
+        TeamResponse response = new TeamResponse();
         response.setStatus(status);
         response.setMessage(message);
-        response.setData(presetListModel);
+        response.setTeamName(teamName);
+        response.setTeamId(teamId);
+        response.setUserId(userId);
+        response.setPokemonTeamPresetsModel(pokemonTeamPresetsModel);
+        response.setMatchDetails(matchDetails);
         return response;
     }
 

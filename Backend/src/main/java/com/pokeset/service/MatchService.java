@@ -1,8 +1,8 @@
 package com.pokeset.service;
 
 import com.pokeset.model.MatchRequestWrapper;
-import com.pokeset.model.Response;
+import com.pokeset.model.BaseResponse;
 
 public interface MatchService {
-    Response<Object> postRegisterMatch(MatchRequestWrapper matchRequestWrapper);
+    BaseResponse<Object> postRegisterMatch(MatchRequestWrapper matchRequestWrapper);
 }

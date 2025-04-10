@@ -26,17 +26,17 @@ public class PokemonPresetData {
     @Column(name = "pokemon_id")
     private Integer pokemonId;
 
-    @Column(name = "move_1")
-    private Integer move1;
+    @Column(name = "move1_id")
+    private Integer move1_id;
 
-    @Column(name = "move_2")
-    private Integer move2;
+    @Column(name = "move2_id")
+    private Integer move2_id;
 
-    @Column(name = "move_3")
-    private Integer move3;
+    @Column(name = "move3_id")
+    private Integer move3_id;
 
-    @Column(name = "move_4")
-    private Integer move4;
+    @Column(name = "move4_id")
+    private Integer move4_id;
 
     @Column(name = "item")
     private String item;
@@ -83,36 +83,36 @@ public class PokemonPresetData {
         return pokemonId;
     }
 
-    public Integer getMove1() {
-        return move1;
+    public Integer getMove1_id() {
+        return move1_id;
     }
 
-    public void setMove1(Integer move1) {
-        this.move1 = move1;
+    public void setMove1_id(Integer move1_id) {
+        this.move1_id = move1_id;
     }
 
-    public Integer getMove2() {
-        return move2;
+    public Integer getMove2_id() {
+        return move2_id;
     }
 
-    public void setMove2(Integer move2) {
-        this.move2 = move2;
+    public void setMove2_id(Integer move2_id) {
+        this.move2_id = move2_id;
     }
 
-    public Integer getMove3() {
-        return move3;
+    public Integer getMove3_id() {
+        return move3_id;
     }
 
-    public void setMove3(Integer move3) {
-        this.move3 = move3;
+    public void setMove3_id(Integer move3_id) {
+        this.move3_id = move3_id;
     }
 
-    public Integer getMove4() {
-        return move4;
+    public Integer getMove4_id() {
+        return move4_id;
     }
 
-    public void setMove4(Integer move4) {
-        this.move4 = move4;
+    public void setMove4_id(Integer move4_id) {
+        this.move4_id = move4_id;
     }
 
     public String getItem() {
