@@ -1,0 +1,51 @@
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 90%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.navbar-links {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  gap: clamp(1rem, 4vw, 3rem);
+  margin: 0;
+  padding: 0;
+  flex: 2;
+}
+
+.navbar-logo {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-login {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: white;
+  text-align: right;
+  font-weight: bold;
+}
+.navbar {
+  margin-top: clamp(1rem, 2vh, 2rem);
+}
+
+.navbar-links li a.inactive-link {
+  text-decoration: none;
+  color: #B3B3B3; 
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.navbar-links li a.active-link {
+  font-weight: bold;
+  color: #F4C430;
+  text-decoration: none; 
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.navbar-links li a:hover {
+  color: #F4C430;
+}

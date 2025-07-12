@@ -1,0 +1,36 @@
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  flex-direction: column;
+}
+
+.home-header {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.home-subtext {
+    color: #B3B3B3;
+    text-align: center;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.button-alignment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(15rem, 15vw, 20rem);
+    margin-top: clamp(1rem, 5vh, 3rem);
+}
+
+.home-button {
+    background-color: #F4C430;
+    color: #0D0C1B;
+    height: clamp(3rem, 4vw, 10rem);
+    width: clamp(10rem, 15vw, 15rem);
+    border: none;font-size: clamp(0.5rem, 1vw, 1.5rem);
+}
