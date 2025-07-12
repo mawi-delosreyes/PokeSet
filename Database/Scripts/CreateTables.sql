@@ -77,3 +77,10 @@ CREATE TABLE PokemonMoves (
 	type_2 varchar(20),
 	PRIMARY KEY(move_id)
 );
+
+CREATE TABLE PokemonList(
+	pokemon_id int(11) NOT NULL,
+	pokemon_name varchar(100) NOT NULL,
+	type_1 varchar(50) NOT NULL,
+	type_2 varchar(50)
+);
