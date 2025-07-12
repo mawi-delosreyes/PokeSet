@@ -24,6 +24,9 @@ public final class ResponseConstants {
     public static final String MATCH_REGISTERED = "Match has been saved";
     public static final String MOVE_REGISTERED = "Pokemon Move has been saved";
     public static final String MOVE_EXISTING = "Pokemon Move already exists";
+    public static final String POKEMON_LIST_UPDATED = "Pokemon List is updated";
+    public static final String AVAILABLE_POKEMON_LIST = "Pokemon List Found";
+    public static final String UNAVAILABLE_POKEMON_LIST = "No Pokemon List Found";
 
     private ResponseConstants(){}
 

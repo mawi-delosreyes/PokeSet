@@ -3,6 +3,7 @@ package com.pokeset.controller;
 import com.pokeset.model.BaseResponse;
 import com.pokeset.model.IndividualPresetResponse;
 import com.pokeset.model.PokemonPresetRequestWrapper;
+import com.pokeset.service.PokemonListService;
 import com.pokeset.service.PokemonPresetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class PokemonController {
 
     @Autowired
     PokemonPresetService pokemonPresetService;
+
+    @Autowired
+    PokemonListService pokemonListService;
 
     @PostMapping("/preset/register")
     public ResponseEntity postRegisterPokemonPreset(
@@ -51,4 +55,17 @@ public class PokemonController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/updateList")
+    public ResponseEntity updatePokemonList() {
+        BaseResponse response = pokemonListService.updatePokemonList();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getList")
+    public ResponseEntity getPokemonList(){
+        BaseResponse response = pokemonListService.getPokemonList();
+        return ResponseEntity.ok(response);
+    }
+
 }

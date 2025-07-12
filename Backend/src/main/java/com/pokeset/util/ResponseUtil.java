@@ -4,6 +4,8 @@ import com.pokeset.dto.MatchDetails;
 import com.pokeset.model.*;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 @UtilityClass
 public class ResponseUtil {
 
@@ -42,6 +44,15 @@ public class ResponseUtil {
         response.setUserId(userId);
         response.setPokemonTeamPresetsModel(pokemonTeamPresetsModel);
         response.setMatchDetails(matchDetails);
+        return response;
+    }
+
+    public PokemonListResponse generatedResponse(String status, String message, List pokemonList){
+        PokemonListResponse response = new PokemonListResponse();
+        response.setStatus(status);
+        response.setMessage(message);
+        response.setPokemonList(pokemonList);
+
         return response;
     }
 
