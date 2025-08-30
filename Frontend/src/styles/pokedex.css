@@ -5,26 +5,19 @@
     border: 1px solid #3B82F6;
     padding: 1rem;
     border-radius: 8px;
-    width: 300px;
-    height: 100px;
     background-color:rgba(45, 45, 62, 0.3);
-    margin-top: 1rem;
     right: clamp(1.25rem, 3vw, 2rem);
-    top: clamp(10rem, 15vw, 15rem);
+    top: clamp(8rem, 5vw, 10rem);
     position: absolute;
-    min-width: clamp(5rem, 15vw, 10rem);
-    max-width: clamp(20rem, 30vw, 25rem);
-    min-height: clamp(30rem, 35vw, 50rem);
-    max-height: clamp(50rem, 60vw, 70rem);
+    width: clamp(17rem, 20vw, 22rem);
+    height: clamp(30rem, 40vw, 65rem);
 }
 
-
-
-.search-box {
+#search-box {
     background-color: rgba(18, 18, 30, 0.5);
     border: 1px solid #3B82F6;
     height: 1.5rem;
-    width: clamp(15rem, 22vw, 20rem);
+    width: clamp(15rem, 18vw, 20rem);
     font-size: clamp(0.8rem, 2vw, 1rem);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
@@ -38,7 +31,7 @@
     background-color: rgba(18, 18, 30, 0.5);
     border: 1px solid #3B82F6;
     height: 1.5rem;
-    width: clamp(15rem, 22vw, 20rem);
+    width: clamp(15rem, 18vw, 20rem);
     font-size: clamp(0.8rem, 2vw, 1rem);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
@@ -60,7 +53,7 @@
 }
 
 
-.pokemon-list-container {
+#pokemon-list-container {
     width: 100%;
     padding-top: 1rem;
     overflow-y: auto;
@@ -71,4 +64,72 @@
     background-color: transparent;
     border: none;
     text-align: left;
+}
+
+#pokemon-stats {
+    position: absolute;
+    width: 80%;
+    top: clamp(5rem, 7vw, 8rem);
+    left: clamp(5rem, 5vw, 10rem);
+}
+
+#pokemon-row1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pokemon-sprite {
+    width: clamp(6rem, 10vw, 12rem);
+    height: clamp(6rem, 10vw, 12rem);
+    display: block;
+    background-color: #D9D9D9;
+    border-radius: 10%;
+}
+
+#pokemon-info > * {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+#pokemon-info h2 {
+    margin-bottom: 1.5vh;
+}
+
+#pokemon-info p {
+    margin-bottom: 1vh;
+}
+
+#pokemon-row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
+    margin-top: 5rem;
+}
+
+#stats-radar {
+    width: clamp(5rem, 15vw, 20rem);
+    height: clamp(5rem, 15vw, 20rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+#pokemon-evolution {
+    color: white;
+    display: flex;
+}
+
+#pokemon-row3 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    color: white;
 }
