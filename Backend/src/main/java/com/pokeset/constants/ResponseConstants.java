@@ -27,7 +27,7 @@ public final class ResponseConstants {
     public static final String POKEMON_LIST_UPDATED = "Pokemon List is updated";
     public static final String AVAILABLE_POKEMON_LIST = "Pokemon List Found";
     public static final String UNAVAILABLE_POKEMON_LIST = "No Pokemon List Found";
-
+    public static final String POKEMON_INFO_SUCCESS = "Pokemon Info Found";
     private ResponseConstants(){}
 
 }

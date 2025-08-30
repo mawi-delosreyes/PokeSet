@@ -25,17 +25,19 @@ public class PokemonListServiceImpl implements PokemonListService {
     @Autowired
     PokemonListRepository pokemonListRepository;
 
-    public BaseResponse<Object> updatePokemonList(){
+    public BaseResponse<Object> updatePokemonList(Integer limit){
         Optional<PokemonList> pokemonList = pokemonListRepository.findTopByOrderByPokemonIdDesc();
 
         Boolean flag = Boolean.TRUE;
-        Integer pokemon_id = pokemonList.get().getPokemonId() + 1;
+        Integer pokemon_id = 1;
+        if (!pokemonList.isEmpty()) {
+            pokemon_id = pokemonList.get().getPokemonId() + 1;
+        }
 
         while(flag) {
-            System.out.print(pokemon_id);
             String available_pokemon = updateFromURL(pokemon_id);
 
-            if(available_pokemon.equals("Not Found")){
+            if(available_pokemon.equals("Not Found") || pokemon_id.equals(limit)){
                 flag = Boolean.FALSE;
             }
 
@@ -84,7 +86,6 @@ public class PokemonListServiceImpl implements PokemonListService {
             pokemonListRepository.save(pokemonList);
             return "Pokemon Added";
         } catch (Exception e) {
-            System.out.print(e);
             return "Not Found";
         }
     }

@@ -56,4 +56,19 @@ public class ResponseUtil {
         return response;
     }
 
+    public PokemonInfoResponse<PokemonInfo> generatePokemonResponse(String status, String message, PokemonInfo pokemonInfo) {
+        PokemonInfoResponse<PokemonInfo> response = new PokemonInfoResponse<>();
+        response.setStatus(status);
+        response.setMessage(message);
+        response.setPokemonInfo(pokemonInfo);
+        return response;
+    }
+
+    public PokemonInfoResponse<PokemonInfo> generatePokemonResponse(String status, String message) {
+        PokemonInfoResponse<PokemonInfo> response = new PokemonInfoResponse<>();
+        response.setStatus(status);
+        response.setMessage(message);
+        return response;
+    }
+
 }
