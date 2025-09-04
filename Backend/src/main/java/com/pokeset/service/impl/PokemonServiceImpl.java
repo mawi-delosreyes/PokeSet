@@ -3,7 +3,6 @@ package com.pokeset.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokeset.constants.ResponseConstants;
-import com.pokeset.model.BaseResponse;
 import com.pokeset.model.PokemonInfo;
 import com.pokeset.model.PokemonInfoResponse;
 import com.pokeset.service.PokemonService;
@@ -42,6 +41,7 @@ public class PokemonServiceImpl implements PokemonService {
             pokemonInfo.setAbilities(getAbility(pokemon));
             pokemonInfo.setWeaknesses(getWeakness(pokemon));
             pokemonInfo.setEvolution(getEvolution(pokemonSpecies));
+            pokemonInfo.setMoveList(moveList(pokemon));
 
             return ResponseUtil.generatePokemonResponse(ResponseConstants.SUCCESS, ResponseConstants.POKEMON_INFO_SUCCESS, pokemonInfo);
         } catch (Exception e) {
@@ -216,5 +216,61 @@ public class PokemonServiceImpl implements PokemonService {
                 collectSpecies(nextChain, speciesMap);
             }
         }
+    }
+
+    private List<Map<String, String>> moveList(Map<String, Object> pokemon) {
+
+        List<Map<String, Object>> moveList = (List<Map<String, Object>>) pokemon.get("moves");
+        List<Map<String, String>> moves = new ArrayList<>();
+
+        for (Map<String, Object> move : moveList) {
+            Map<String, String> moveData = (Map<String, String>) move.get("move");
+            Map<String, String> moveInfo = new HashMap<>();
+            String moveName = moveData.get("name");
+            String moveUrl = moveData.get("url");
+
+            try {
+                RestTemplate restTemplate = new RestTemplate();
+                ObjectMapper mapper = new ObjectMapper();
+                String moveUrlResponse = restTemplate.getForObject(moveUrl, String.class);
+                Map<String, Object> moveResponse = mapper.readValue(moveUrlResponse, new TypeReference<>() {});
+
+                List<Map<String, Object>> flavorTextEntries = (List<Map<String, Object>>) moveResponse.get("flavor_text_entries");
+
+                String language = null;
+                Integer ctr = 0;
+                while (!"en".equals(language)) {
+                    Map<String, Object> flavorTextEntry = flavorTextEntries.get(ctr);
+                    Map<String, String> flavorTextLanguage = (Map<String, String>) flavorTextEntry.get("language");
+                    language = flavorTextLanguage.get("name");
+                    ctr += 1;
+                }
+
+                Map<String, Object> flavorText = flavorTextEntries.get(ctr-1);
+                Map<String, Object> damageClass = (Map<String, Object>) moveResponse.get("damage_class");
+                String moveDescription = flavorText.get("flavor_text").toString().replace("\n", " ").replace("\f", " ");;
+                String movePower = moveResponse.get("power") != null ? moveResponse.get("power").toString() : null;
+                String moveAccuracy = moveResponse.get("accuracy") != null ? moveResponse.get("accuracy").toString() : null;
+                String movePP = moveResponse.get("pp") != null ? moveResponse.get("pp").toString() : null;
+                String moveCategory = (String) damageClass.get("name");
+
+                moveInfo.put("name", moveName);
+                moveInfo.put("description", moveDescription);
+                moveInfo.put("power", movePower);
+                moveInfo.put("accuracy", moveAccuracy);
+                moveInfo.put("pp", movePP);
+                moveInfo.put("category", moveCategory);
+
+                moves.add(moveInfo);
+
+            } catch (Exception e) {
+                Map<String, String> errorMap = new HashMap<>();
+                errorMap.put("error", e.toString());
+                List<Map<String, String>> errorList = new ArrayList<>();
+                errorList.add(errorMap);
+                return errorList;
+            }
+        }
+        return moves;
     }
 }
