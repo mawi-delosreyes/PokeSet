@@ -1,0 +1,73 @@
+.move-card {
+  border: 1px solid #725E3E;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background-color: #1E1E2E;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 70%;
+}
+
+.move-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: capitalize;
+  width: 100%; 
+}
+
+.move-card-header .stats {
+  display: flex;
+  gap: 2vw; 
+  justify-content: center; 
+  flex-grow: 1;
+}
+
+.move-card-header .stats p {
+  margin: 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.move-type-icon {
+  display: inline-block;
+  transform: rotate(45deg);
+  width: 10px;
+  height: 10px;
+  aspect-ratio: 1 / 1;
+  margin-right: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.move-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-left: 6px;
+}
+
+.move-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.move-card div {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.move-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1;
+}

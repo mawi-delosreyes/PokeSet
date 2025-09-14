@@ -19,14 +19,34 @@ ChartJS.register(
   Legend
 );
 
-function StatsRadar() {
+type StatsObject = {
+  hp?: number;
+  attack?: number;
+  defense?: number;
+  special_attack?: number;
+  special_defense?: number;
+  speed?: number;
+};
+
+type StatsRadarProps = {
+  stats: StatsObject;
+};
+
+function StatsRadar({ stats }: StatsRadarProps) {
   const data = {
-    labels: ['HP', 'Attack', 'Defense', 'Sp. Atk', 'Sp. Def', 'Speed'],
+    labels: ['HP', 'Attack', 'Defense', 'Speed', 'Sp. Def', 'Sp. Atk'],
     datasets: [
       {
-        data: [45, 49, 49, 65, 65, 45], 
+        data: [
+          stats.hp || 0,
+          stats.attack || 0,
+          stats.defense || 0,
+          stats.speed || 0,
+          stats.special_defense || 0,
+          stats.special_attack || 0,
+        ],
         backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        borderColor: '#FFD70033', 
+        borderColor: '#FFD70033',
         borderWidth: 2,
       },
     ],
@@ -37,6 +57,14 @@ function StatsRadar() {
         legend: {
         display: false,
         },
+        tooltip: {
+          callbacks: {
+            label: function (context: any) {
+              const statNames = ['HP', 'Attack', 'Defense', 'Speed', 'Sp. Def', 'Sp. Atk'];
+              return `${statNames[context.dataIndex]}: ${context.raw}`;
+            }
+          }
+        }
     },
     scales: {
       r: {
