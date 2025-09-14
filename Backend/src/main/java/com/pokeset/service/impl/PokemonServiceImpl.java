@@ -40,7 +40,8 @@ public class PokemonServiceImpl implements PokemonService {
             }
             pokemonInfo.setAbilities(getAbility(pokemon));
             pokemonInfo.setWeaknesses(getWeakness(pokemon));
-            pokemonInfo.setEvolution(getEvolution(pokemonSpecies));
+            pokemonInfo.setStatList(getStatList(pokemon));
+//            pokemonInfo.setEvolution(getEvolution(pokemonSpecies));
             pokemonInfo.setMoveList(moveList(pokemon));
 
             return ResponseUtil.generatePokemonResponse(ResponseConstants.SUCCESS, ResponseConstants.POKEMON_INFO_SUCCESS, pokemonInfo);
@@ -272,5 +273,19 @@ public class PokemonServiceImpl implements PokemonService {
             }
         }
         return moves;
+    }
+
+    private Map<String, Integer> getStatList(Map<String, Object> pokemon) {
+        List<Map<String, Object>> pokemonBaseStats = (List<Map<String, Object>>) pokemon.get("stats");
+        Map<String, Integer> pokemonStats = new HashMap<>();
+
+        for (Map<String, Object> baseStat : pokemonBaseStats) {
+            Map<String, String> statInfo = (Map<String, String>) baseStat.get("stat");
+            String statName = statInfo.get("name");
+            Integer statValue = (Integer) baseStat.get("base_stat");
+
+            pokemonStats.put(statName, statValue);
+        }
+        return pokemonStats;
     }
 }

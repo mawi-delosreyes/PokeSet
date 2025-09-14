@@ -12,6 +12,7 @@ public class PokemonInfo {
     private List<Map<String, String>> abilities;
     private Map<String, String> evolution;
     private List<Map<String, String>> moveList;
+    private Map<String, Integer> statList;
 
     public String getSpriteUrl() {
         return spriteUrl;
@@ -75,6 +76,14 @@ public class PokemonInfo {
 
     public void setMoveList(List<Map<String, String>> moveList) {
         this.moveList = moveList;
+    }
+
+    public Map<String, Integer> getStatList() {
+        return statList;
+    }
+
+    public void setStatList(Map<String, Integer> statList) {
+        this.statList = statList;
     }
 
 }
