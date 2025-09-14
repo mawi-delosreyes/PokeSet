@@ -281,7 +281,7 @@ public class PokemonServiceImpl implements PokemonService {
 
         for (Map<String, Object> baseStat : pokemonBaseStats) {
             Map<String, String> statInfo = (Map<String, String>) baseStat.get("stat");
-            String statName = statInfo.get("name");
+            String statName = statInfo.get("name").replace("-", "_");
             Integer statValue = (Integer) baseStat.get("base_stat");
 
             pokemonStats.put(statName, statValue);
