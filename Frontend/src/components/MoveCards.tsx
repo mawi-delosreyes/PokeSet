@@ -18,7 +18,7 @@ const MoveCards: React.FC<MoveCardsProps> = ({
   category,
   pp,
   description,
-  type,
+  // type,
 }) => (
   <div className="move-card">
     <div className="move-card-header">

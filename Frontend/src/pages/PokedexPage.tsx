@@ -1,6 +1,6 @@
 import '../styles/pokedex.css'
-import { useEffect, useState } from 'react';
 import '../styles/movecard.css';
+import { useEffect, useState } from 'react';
 import { getPokemonList, getPokemonData } from '../api/pokemonlist';
 import PokemonRadar from '../components/StatsRadar';
 import MoveCards from '../components/MoveCards';
@@ -92,7 +92,15 @@ function PokedexPage() {
             <h2>Moves</h2>
             <div id="move-list">
               {loadingInfo ? (
-                <p>Loading moves...</p>
+                <MoveCards
+                  name="Loading..."
+                  power="..."
+                  accuracy="..."
+                  category="..."
+                  pp="..."
+                  description=""
+                  // type={null}
+                />
               ) : selectedPokemon && pokemonInfo?.moveList?.length > 0 ? (
                 pokemonInfo.moveList.map((move: any, index: number) => (
                   <MoveCards
@@ -123,9 +131,9 @@ function PokedexPage() {
 
       </div>
 
-      <div className="search-outline">
+      <div className="search-pokemon">
         <input
-          id="search-box"
+          id="search-box-pokedex"
           placeholder="Search Pokemon"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

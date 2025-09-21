@@ -1,0 +1,19 @@
+.pokemon-card {
+    border-radius: 8px;
+    width: 20vw;
+    height: 20vh;
+}
+
+#empty-pokemon-card {
+    border: 2px dashed #3B82F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#empty-pokemon-card p {
+    color: #89CEFF;
+    font-family: poppins, sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+}
