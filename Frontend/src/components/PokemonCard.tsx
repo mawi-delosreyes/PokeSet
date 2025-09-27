@@ -8,7 +8,7 @@ type PokemonCardProps = {
 const PokemonCard: React.FC<PokemonCardProps> = ({ hasPokemon }) => (
     <div>
         {hasPokemon ? (
-                <div className="pokemon-card">
+                <div id="pokemon-card" className="pokemon-card">
                     <p>Pokémon here</p>
                 </div>
             ) : (

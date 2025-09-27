@@ -38,7 +38,7 @@
     color: white;
 }
 
-.search-pokemon ul {
+#pokemon-list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -49,7 +49,6 @@
     gap: 0.5rem;
     margin-left: auto;
     margin-right: auto;
-    list-style: none;
 }
 
 
@@ -58,7 +57,7 @@
     padding-top: 1rem;
     overflow-y: auto;
     scrollbar-width: none; 
-  }
+}
 
 .pokemon-button {
     background-color: transparent;
@@ -81,7 +80,6 @@
     height: 30vh;
     width: 85%;
 }
-
 
 #pokemon-sprite-wrapper {
     display: flex;

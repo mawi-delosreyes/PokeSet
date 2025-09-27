@@ -1,7 +1,7 @@
 import '../styles/pokedex.css'
 import '../styles/movecard.css';
 import { useEffect, useState } from 'react';
-import { getPokemonList, getPokemonData } from '../api/pokemonlist';
+import { getPokemonList, getPokemonData } from '../api/pokemonList';
 import PokemonRadar from '../components/StatsRadar';
 import MoveCards from '../components/MoveCards';
 
@@ -16,8 +16,8 @@ function PokedexPage() {
   useEffect(() => {
     getPokemonList()
       .then(data => {
-        if (Array.isArray(data.pokemonList) && data.pokemonList.length > 0) {
-          setPokemon(data.pokemonList[0]);
+        if (Array.isArray(data.list) && data.list.length > 0) {
+          setPokemon(data.list[0]);
         }
         setLoading(false);
       })
@@ -32,7 +32,6 @@ function PokedexPage() {
     setLoadingInfo(true);
     try {
       const info = await getPokemonData(pokemonId);
-      console.log(info);
       setPokemonInfo(info.pokemonInfo);
     } catch (err) {
       console.error("Error fetching stats:", err);
@@ -134,7 +133,7 @@ function PokedexPage() {
       <div className="search-pokemon">
         <input
           id="search-box-pokedex"
-          placeholder="Search Pokemon"
+          placeholder="Search Pokemon..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -142,7 +141,7 @@ function PokedexPage() {
           <p>Loading...</p>
         ) : pokemon.length > 0 ? (
           <div id="pokemon-list-container">
-            <ul>
+            <ul id="pokemon-list">
               {pokemon
                 .filter((p: any) =>
                   p.pokemonName.toLowerCase().includes(searchQuery.toLowerCase())
