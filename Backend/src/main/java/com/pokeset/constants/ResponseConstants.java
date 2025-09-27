@@ -14,6 +14,8 @@ public final class ResponseConstants {
     public static final String TEAM_UPDATED = "Team has been updated";
     public static final String TEAM_FOUND = "Team found";
     public static final String TEAM_NOT_FOUND = "Team is not found";
+    public static final String AVAILABLE_TEAM_LIST = "Team List Found";
+    public static final String UNAVAILABLE_TEAM_LIST = "No Team List Found";
     public static final String PRESET_REGISTERED = "Pokemon Preset has been saved";
     public static final String PRESET_EXISTING = "Pokemon Preset is already existing";
     public static final String PRESET_UPDATED = "Pokemon Preset has been updated";

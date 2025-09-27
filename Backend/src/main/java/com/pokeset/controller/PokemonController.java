@@ -69,7 +69,7 @@ public class PokemonController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getList")
+    @GetMapping("/getPokemonList")
     public ResponseEntity getPokemonList(){
         BaseResponse response = pokemonListService.getPokemonList();
         return ResponseEntity.ok(response);

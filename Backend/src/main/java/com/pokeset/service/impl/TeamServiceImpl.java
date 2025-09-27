@@ -1,5 +1,7 @@
 package com.pokeset.service.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokeset.constants.ResponseConstants;
 import com.pokeset.dto.*;
 import com.pokeset.model.BaseResponse;
@@ -11,14 +13,20 @@ import com.pokeset.service.TeamService;
 import com.pokeset.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    PokemonListRepository pokemonListRepository;
 
     @Autowired
     private PokemonPresetRepository pokemonPresetRepository;
@@ -50,7 +58,18 @@ public class TeamServiceImpl implements TeamService {
         return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.TEAM_UPDATED);
     }
 
-    public TeamResponse<Object> getTeam(Integer teamId, Integer userId, Boolean access) {
+    public BaseResponse<Object> getTeamList(Integer userId, Boolean access){
+        Optional<List> teamList = teamRepository.findAllByUserIdAndAccess(userId, access);
+
+        if(!teamList.isEmpty()) {
+            return ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.AVAILABLE_POKEMON_LIST, Collections.singletonList(teamList));
+        } else {
+            return ResponseUtil.generatedResponse(ResponseConstants.ERROR, ResponseConstants.UNAVAILABLE_POKEMON_LIST);
+        }
+    }
+
+    @Override
+    public TeamResponse<Object> getTeamInfo(Integer teamId, Integer userId, Boolean access) {
         PokemonTeamPresetsModel pokemonTeamPresetsModel = new PokemonTeamPresetsModel();
 
         Optional<Team> team_info = teamRepository.findTeamNameByTeamIdAndUserIdAndAccess(teamId, userId, access);
@@ -60,7 +79,7 @@ public class TeamServiceImpl implements TeamService {
 
         String teamName = team_info.get().getTeamName();
         Optional<List<PokemonPreset>> pokemon_presets = pokemonPresetRepository.findByTeamIdAndUserIdOrderByTeamArrange(teamId, userId);
-
+        System.out.println(pokemon_presets.get());
         Integer num_preset = pokemon_presets.get().size();
         if (num_preset >= 1) {
             pokemonTeamPresetsModel.setPokemonPresetModel1(checkPresetExist(pokemon_presets.get().get(0)));
@@ -86,29 +105,44 @@ public class TeamServiceImpl implements TeamService {
 
         return (TeamResponse<Object>) ResponseUtil.generatedResponse(ResponseConstants.SUCCESS, ResponseConstants.TEAM_FOUND,
                 teamName, teamId, userId, pokemonTeamPresetsModel, matchDetails.get());
-
-
     }
 
     private PokemonPresetModel checkPresetExist(PokemonPreset pokemonPreset) {
         PokemonPresetModel pokemonPresetModel = new PokemonPresetModel();
 
-        Optional<PokemonPresetData> pokemon_preset_data = pokemonPresetDataRepository.findByPresetId(pokemonPreset.getPresetId());
-        Optional<PokemonEv> pokemon_ev = pokemonEvRepository.findByEvId(pokemon_preset_data.get().getEvId());
-
-        pokemonPresetModel.setPresetId(pokemonPreset.getPresetId());
-        pokemonPresetModel.setPokemonId(pokemonPreset.getPokemonId());
-        pokemonPresetModel.setPokemonName(null);
-        pokemonPresetModel.setPokemonType1(null);
-        pokemonPresetModel.setPokemonType2(null);
-        pokemonPresetModel.setNature(pokemon_preset_data.get().getNature());
-        pokemonPresetModel.setItem(pokemon_preset_data.get().getItem());
-        pokemonPresetModel.setAbility(pokemon_preset_data.get().getAbility());
-        pokemonPresetModel.setBattleMechanic(pokemon_preset_data.get().getBattleMechanic());
-        pokemonPresetModel.setType(pokemon_preset_data.get().getType());
-        pokemonPresetModel.setPokemonMovesModel(pokemonPresetModel.getPokemonMovesModel());
-        pokemonPresetModel.setPokemonEv(pokemon_ev.get());
-
+        List<Object[]> results = pokemonPresetDataRepository.findPresetsWithPokemonDetails(pokemonPreset.getPresetId());
+        if (results == null || results.isEmpty()) {
+            return null;
+        }
+        Object[] row = results.get(0);
+        if (row != null) {
+            pokemonPresetModel.setPresetId(((Number) row[0]).intValue());
+            pokemonPresetModel.setPokemonId(((Number) row[1]).intValue());
+            pokemonPresetModel.setPokemonName((String) row[2]);
+            pokemonPresetModel.setPokemonType1((String) row[3]);
+            pokemonPresetModel.setPokemonType2((String) row[4]);
+            pokemonPresetModel.setNature((String) row[5]);
+            pokemonPresetModel.setItem((String) row[6]);
+            pokemonPresetModel.setAbility((String) row[7]);
+            pokemonPresetModel.setBattleMechanic((String) row[8]);
+            pokemonPresetModel.setType((String) row[9]);
+            pokemonPresetModel.setPokemonURL(getSpriteUrl(((Number) row[1]).intValue()));
+        }
         return pokemonPresetModel;
+    }
+
+    private String getSpriteUrl(Integer pokemonId) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ObjectMapper mapper = new ObjectMapper();
+
+            String pokemonUrl = "https://pokeapi.co/api/v2/pokemon/" + pokemonId;
+            String pokemonResponse = restTemplate.getForObject(pokemonUrl, String.class);
+            Map<String, Object> pokemon = mapper.readValue(pokemonResponse, new TypeReference<>() {});
+            Map<String, String> spriteList = (Map<String, String>) pokemon.get("sprites");
+            return spriteList.get("front_default");
+        } catch (Exception e) {
+            return e.toString();
+        }
     }
 }

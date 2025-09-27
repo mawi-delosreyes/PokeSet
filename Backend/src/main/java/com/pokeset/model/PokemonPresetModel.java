@@ -5,6 +5,7 @@ import com.pokeset.dto.PokemonEv;
 public class PokemonPresetModel {
     private Integer presetId;
     private Integer pokemonId;
+    private String pokemonURL;
     private String pokemonName;
     private String pokemonType1;
     private String pokemonType2;
@@ -30,6 +31,14 @@ public class PokemonPresetModel {
 
     public void setPokemonId(Integer pokemonId) {
         this.pokemonId = pokemonId;
+    }
+
+    public String getPokemonURL() {
+       return pokemonURL;
+    }
+
+    public void setPokemonURL(String pokemonURL) {
+        this.pokemonURL = pokemonURL;
     }
 
     public String getPokemonName() {

@@ -40,13 +40,22 @@ public class TeamController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getTeam")
+    @GetMapping("/getTeamList")
+    public ResponseEntity getPokemonList(
+            @RequestParam(required = true) Integer userId,
+            @RequestParam(required = true) Boolean access
+    ){
+        BaseResponse response = teamService.getTeamList(userId, access);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getTeamInfo")
     public ResponseEntity<TeamResponse> getTeam(
-            @RequestParam(required = false) Integer teamId,
-            @RequestParam(required = false) Integer userId,
+            @RequestParam(required = true) Integer teamId,
+            @RequestParam(required = true) Integer userId,
             @RequestParam(required = true) Boolean access
     ) {
-        TeamResponse response =  teamService.getTeam(teamId, userId, access);
+        TeamResponse response =  teamService.getTeamInfo(teamId, userId, access);
 
         if(!response.getStatus().equals("success")){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);

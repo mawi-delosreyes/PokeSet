@@ -7,5 +7,6 @@ import com.pokeset.model.TeamResponse;
 public interface TeamService {
     BaseResponse<Object> postRegisterTeam(Team team);
     BaseResponse<Object> postEditTeam(Team team);
-    TeamResponse<Object> getTeam(Integer teamId, Integer userId, Boolean Access);
+    BaseResponse<Object> getTeamList(Integer userId, Boolean access);
+    TeamResponse<Object> getTeamInfo(Integer teamId, Integer userId, Boolean access);
 }

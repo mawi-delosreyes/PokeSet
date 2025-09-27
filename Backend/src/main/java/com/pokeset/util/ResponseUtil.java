@@ -47,11 +47,11 @@ public class ResponseUtil {
         return response;
     }
 
-    public PokemonListResponse generatedResponse(String status, String message, List pokemonList){
-        PokemonListResponse response = new PokemonListResponse();
+    public ListResponse generatedResponse(String status, String message, List list){
+        ListResponse response = new ListResponse();
         response.setStatus(status);
         response.setMessage(message);
-        response.setPokemonList(pokemonList);
+        response.setList(list);
 
         return response;
     }
